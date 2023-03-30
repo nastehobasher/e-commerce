@@ -22,7 +22,7 @@ const Header = () => {
                 <div className='container-xxl'>
                     <div className='row align-items-center'>
                         <div className='col-2'>
-                            <h2><Link className='text-white'>Dev Corner</Link></h2>
+                            <h2><Link className='text-white'>Dookh Store</Link></h2>
                         </div>
                         <div className='col-5'>
                             <div className="input-group">
