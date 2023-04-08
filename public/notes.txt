@@ -1,0 +1,62 @@
+form floating
+marquee
+relative
+react router
+
+
+
+.colors li:nth-child(1) {
+    background-color: #b65417;
+}
+
+.colors li:nth-child(4) {
+    background-color: #e81ca4;
+}
+
+.colors li:nth-child(6) {
+    background-color: #2b1ec3;
+}
+
+.colors li:last-child {
+    background-color: #df9a19;
+}
+
+
+<div>
+                                            <label className=''>Name</label>
+                                            <input
+                                                type='text'
+                                                className='form-control'
+                                                placeholder='Enter your name' />
+                                        </div>
+                                        <div>
+                                            <label className=''>Email</label>
+                                            <input
+                                                type='email'
+                                                className='form-control'
+                                                placeholder='name@example.com' />
+                                        </div>
+<div>
+                                            <label className=''>Review Title</label>
+                                            <input
+                                                type='tel'
+                                                className='form-control'
+                                                placeholder='Give your Review Title' />
+                                        </div>
+
+
+                                <div>
+                                    <img src='https://cdn.shopify.com/s/files/1/0783/1357/products/AirBrush_20221019215849_grande.jpg?v=1666239933'
+                                        className='img-fluid' alt='' />
+                                </div>                      
+
+
+
+
+
+
+
+
+
+                                
+                                              
