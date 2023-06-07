@@ -58,5 +58,53 @@ react router
 
 
 
-                                
-                                              
+
+
+ <div className='small-banner position-relative py-2'>
+                                <img
+                                    src='/img/kabo-01.jpeg'
+                                    className='img-fluid rounded-3'
+                                    alt='main banner' />
+                                <div className='small-banner-content position-absolute'>
+                                    <h4>Best sake</h4>
+                                    <h5>Laptop Max.</h5>
+                                    <p>From $999.00 <br /> or $41.64/mo</p>
+                                </div>
+                            </div>
+
+                            <div className='small-banner position-relative py-3'>
+                                <img
+                                    src='/img/kabo-06.jpeg'
+                                    className='img-fluid rounded-3 '
+                                    alt='main banner' />
+                                <div className='small-banner-content position-absolute'>
+                                    <h4>New Arival</h4>
+                                    <h5>But iPad Air</h5>
+                                    <p>From $999.00 <br />or $41.64/mo</p>
+                                </div>
+                            </div>
+
+                            <div className='small-banner position-relative'>
+                                <img
+                                    src='/img/kabo-07.jpeg'
+                                    className='img-fluid rounded-3'
+                                    alt='main banner' />
+                                <div className='small-banner-content position-absolute'>
+                                    <h4>New Arival</h4>
+                                    <h5>iPad S13+ Pro.</h5>
+                                    <p>From $999.00 or $41.64/mo</p>
+                                </div>
+                            </div>
+
+                            <div className='small-banner position-relative '>
+                                <img
+                                    src='/img/s.jpeg'
+                                    className='img-fluid rounded-3'
+                                    alt='main banner' />
+                                <div className='small-banner-content position-absolute'>
+                                    <h4>New Arival</h4>
+                                    <h5>Head Phone</h5>
+                                    <p>From $999.00 or $41.64/mo</p>
+                                </div>
+                            </div>
+                        </div>

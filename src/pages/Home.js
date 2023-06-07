@@ -1,83 +1,86 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import ReactStars from "react-rating-stars-component";
 import Marquee from 'react-fast-marquee';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Blogcard from '../components/Blogcard';
-import Productcard from '../components/Productcard';
+// import Productcard from '../components/Productcard';
 import SpecialProd from '../components/SpecialProd';
 import Container from '../components/Container';
 import { services } from "../utils/Data";
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllblogs } from '../features/blogs/blogSlice';
+import moment from 'moment';
+import { getAllporducts } from '../features/products/productSlice';
+import prodcompare from "../images/prodcompare.svg";
+import wish from "../images/wish.svg";
+import jacket from "../img/jacket.jpeg";
+import jacket1 from "../img/jacket-01.jpeg";
+import addcart from "../images/add-cart.svg";
+import view from "../images/view.svg";
+import { addtoWishlist } from '../features/products/productSlice';
 
 const Home = () => {
+    const blogState = useSelector((state) => state.blog.blog ? state.blog.blog : []);
+    const productState = useSelector((state) => state.product.product ? state.product.product : []);
+    // console.log("products œœœœœœœœœœ", productState);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        getblogs();
+        getProducts();
+    }, [])
+    const getblogs = () => {
+        dispatch(getAllblogs());
+    }
+    const getProducts = () => {
+        dispatch(getAllporducts());
+    }
+    const addtoWish = (id) => {
+        console.log("hhhhhnb", id);
+        dispatch(addtoWishlist(id));
+    }
     return (
         <>
-            <Container class1='home-wrapper-1 py-5'>
-                <div className='row'>
-                    <div className='col-6'>
-                        <div className='main-banner position-relative p-2'>
-                            <img
-                                src='/img/ssty.png'
-                                className='img-fluid rounded-3 ps-5'
-                                alt='main banner' />
+            <Container class1='home-wrapper-1 py-4'>
+                <div className='row bb'>
+                    <div className='col-4'>
+                        <div className='main-banner p-0'>
                             <div className='main-banner-content position-absolute'>
-                                <h4>SUPERCHARGED FOR PROS.</h4>
+                                <h4>Latest Collection.</h4>
                                 <h5>Women outfit</h5>
                                 <p>From $999.00 or $41.64/mo</p>
-                                <Link className='button mt-2'>BUY NOW</Link>
+                                <Link className='button mt-3'>BUY NOW</Link>
                             </div>
                         </div>
                     </div>
-                    <div className='col-6'>
-                        <div className='d-flex flex-wrap gap-15 justify-content-between align-items-center'>
-                            <div className='small-banner position-relative py-2'>
-                                <img
-                                    src='/img/kabo-01.jpeg'
-                                    className='img-fluid rounded-3'
-                                    alt='main banner' />
-                                <div className='small-banner-content position-absolute'>
-                                    <h4>Best sake</h4>
-                                    <h5>Laptop Max.</h5>
-                                    <p>From $999.00 <br /> or $41.64/mo</p>
-                                </div>
-                            </div>
-
-                            <div className='small-banner position-relative py-3'>
-                                <img
-                                    src='/img/kabo-06.jpeg'
-                                    className='img-fluid rounded-3 '
-                                    alt='main banner' />
-                                <div className='small-banner-content position-absolute'>
-                                    <h4>New Arival</h4>
-                                    <h5>But iPad Air</h5>
-                                    <p>From $999.00 <br />or $41.64/mo</p>
-                                </div>
-                            </div>
-
-                            <div className='small-banner position-relative'>
-                                <img
-                                    src='/img/kabo-07.jpeg'
-                                    className='img-fluid rounded-3'
-                                    alt='main banner' />
-                                <div className='small-banner-content position-absolute'>
-                                    <h4>New Arival</h4>
-                                    <h5>iPad S13+ Pro.</h5>
-                                    <p>From $999.00 or $41.64/mo</p>
-                                </div>
-                            </div>
-
-                            <div className='small-banner position-relative '>
-                                <img
-                                    src='/img/s.jpeg'
-                                    className='img-fluid rounded-3'
-                                    alt='main banner' />
-                                <div className='small-banner-content position-absolute'>
-                                    <h4>New Arival</h4>
-                                    <h5>Head Phone</h5>
-                                    <p>From $999.00 or $41.64/mo</p>
-                                </div>
-                            </div>
+                    <div className='col-8'>
+                        <div className='main-img'>
+                            <img
+                                src='/img/ooo.png'
+                                className=' rounded-3 balo'
+                                alt='main banner' />
                         </div>
                     </div>
                 </div>
+                {/* <div className="wrapper">
+                    <div className="text">
+                        <h3>Latest Collection </h3>
+                        <h1> Fashion Girl</h1>
+                        <p>Kuso dhawow website kayaga oo ay kuugu diyaar yihiin.
+                            dhammaan alaabaha aad u baahantihiin doloremque sunt quibusdam quisquam
+                            illum? ducimus
+                            quasi qua
+                        </p>
+                        <p class="price">Price: <span>$100</span></p>
+                        <button type="button">Shop Now</button>
+                    </div>
+                    <div>
+                        <img
+                            src='/img/ooo.png'
+                            className=' rounded-3 balo'
+                            alt='main banner' />
+                    </div>
+                </div> */}
             </Container>
             <Container class1='home-wrapper-2 py-5'>
                 <div className='row'>
@@ -102,7 +105,26 @@ const Home = () => {
             <Container class1='home-wrapper-3 py-5'>
                 <div className='row'>
                     <div className='col-12'>
-                        <div className='categories d-flex justify-content-between flex-wrap align-items-center'>
+                        <div className="touch-container">
+                            <div className="touch-text">
+                                <div className="text-content text-align-center">
+                                    <p>Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Voluptas reiciendis perspiciatis ducimus optio
+                                        quos iusto iste ab sequi fugit, deleniti a
+                                        ipsam itaque repellat, quaerat, molestias exercitationem
+                                        voluptatibus praesentium error porro et veniam recusandae numquam eveniet commodi! Asperiores, tenetur
+                                        voluptatibus praesentium error porro et veniam recusandae numquam eveniet commodi! Asperiores, tenetur
+                                        voluptatibus praesentium error porro et veniam recusandae numquam eveniet commodi! Asperiores, tenetur
+                                        voluptatibus praesentium error porro et veniam recusandae numquam eveniet commodi! Asperiores, tenetur
+                                        et?
+                                        et?</p>
+                                </div>
+                            </div>
+                            {/* <div class="touch-img">
+                                <img src="./trn3-removebg-preview.png" alt="" />
+                            </div> */}
+                        </div>
+                        {/* <div className='categories d-flex justify-content-between flex-wrap align-items-center'>
                             <div className='d-flex gap align-items-center'>
                                 <div>
                                     <h6>Music & Gaming</h6>
@@ -159,7 +181,7 @@ const Home = () => {
                                 </div>
                                 <img src='images/headphone.jpg' alt='camera' />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </Container>
@@ -169,7 +191,54 @@ const Home = () => {
                     <div className='col-12'>
                         <h3 className='section-heading'> Featured Collection</h3><br />
                     </div>
-                    <Productcard />
+                    {productState && productState?.map((item, index) => {
+                        if (item.tags.includes("featured")) {
+                            return (
+                                <div key={index} className={"col-3"}>
+                                    <div className='product-card position-relative'>
+                                        <div className='wishlist-icon position-absolute '>
+                                            <button className='border-0 bg-transparent' onClick={(e) => { addtoWish(item?._id) }}>
+                                                <img src={wish} alt='wishlist' />
+                                            </button>
+                                        </div>
+                                        <div className='product-image'>
+
+                                            <img src={jacket} className='img-fluid' alt='product' />
+                                            {/* <img src={jacket1} className='img-fluid' alt='product' /> 
+                                            <img src={item?.images[0]?.url} className='img-fluid' alt='product' />
+                                            */}
+                                        </div>
+                                        <div className='product-details'>
+                                            <h6>{item?.brand}</h6>
+                                            <h5 className='product-title'>{item?.title}</h5>
+                                            <ReactStars
+                                                count={5}
+                                                size={24}
+                                                value={item?.totalrating.toString()}
+                                                edit={false}
+                                                activeColor="#ffd700"
+                                            />
+                                            <p className='price'>${item?.price}</p>
+                                        </div>
+                                        <div className='action-bar position-absolute'>
+                                            <div className='d-flex flex-column gap-15'>
+                                                <Link>
+                                                    <img src={prodcompare} alt='compare' />
+                                                </Link>
+                                                <Link>
+                                                    <img onClick={() => navigate("/product/" + item?._id)} src={view} alt='view' />
+                                                </Link>
+                                                <Link>
+                                                    <img src={addcart} alt='addcart' />
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    })
+                    }
                 </div>
             </Container>
 
@@ -226,7 +295,27 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='row'>
-                    <SpecialProd />
+                    {/* {productState && productState?.map((item, index) => { */}
+                    {productState.map((item, index) => {
+                        if (item.tags.includes("special")) {
+                            // console.log(".... inside if");
+                            return (<SpecialProd
+                                key={index}
+                                id={item._id}
+                                brand={item?.brand}
+                                title={item?.title}
+                                totalrating={item?.totalrating.toString()}
+                                price={item?.price}
+                                sold={item?.sold}
+                                quantity={item?.quantity}
+
+                            />)
+                        }
+                        // else { return "hello" }
+
+                    })
+                    }
+
                 </div>
             </Container>
 
@@ -237,8 +326,52 @@ const Home = () => {
                         <h3 className='section-heading'> Our Popular Collection</h3>
                     </div>
                     <div className='row'>
-                        <Productcard />
-                        <Productcard />
+                        {productState && productState?.map((item, index) => {
+                            if (item.tags.includes("popular")) {
+                                return (
+                                    <div key={index} className={"col-3"}>
+                                        <div className='product-card position-relative'>
+                                            <div className='wishlist-icon position-absolute '>
+                                                <button className='border-0 bg-transparent' onClick={(e) => { addtoWish(item?._id) }}>
+                                                    <img src={wish} alt='wishlist' />
+                                                </button>
+                                            </div>
+                                            <div className='product-image'>
+                                                <img src={jacket} className='img-fluid' alt='product' />
+                                                {/* <img src={jacket1} className='img-fluid' alt='product' /> */}
+                                            </div>
+                                            <div className='product-details'>
+                                                <h6>{item?.brand}</h6>
+                                                <h5 className='product-title'>{item?.title}</h5>
+                                                <ReactStars
+                                                    count={5}
+                                                    size={24}
+                                                    value={item?.totalrating.toString()}
+                                                    edit={false}
+                                                    activeColor="#ffd700"
+                                                />
+
+                                                <p className='price'>${item?.price}</p>
+                                            </div>
+                                            <div className='action-bar position-absolute'>
+                                                <div className='d-flex flex-column gap-15'>
+                                                    <Link>
+                                                        <img src={prodcompare} alt='compare' />
+                                                    </Link>
+                                                    <Link>
+                                                        <img onClick={() => navigate("/product/" + item?._id)} src={view} alt='view' />
+                                                    </Link>
+                                                    <Link>
+                                                        <img src={addcart} alt='addcart' />
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        })
+                        }
                     </div>
                 </div>
             </Container>
@@ -250,26 +383,26 @@ const Home = () => {
                         <div className='marque-inner-wrapper card-wrapper'>
                             <Marquee className='d-flex'>
                                 <div className='mx-4 w-25'>
-                                    <img src='images/brand-01.png' alt='brand' />
+                                    <img src='images/zara.png' alt='brand' />
                                 </div>
                                 <div className='mx-4 w-25'>
-                                    <img src='images/brand-02.png' alt='brand' />
+                                    <img src='images/gucii.png' alt='brand' />
                                 </div>
                                 <div className='mx-4 w-25'>
-                                    <img src='images/brand-03.png' alt='brand' />
+                                    <img src='images/dior.png' alt='brand' />
                                 </div>
                                 <div className='mx-4 w-25'>
-                                    <img src='images/brand-04.png' alt='brand' />
+                                    <img src='images/aba1.png' alt='brand' />
                                 </div>
                                 <div className='mx-4 w-25'>
-                                    <img src='images/brand-05.png' alt='brand' />
+                                    <img src='images/lv.png' alt='brand' />
                                 </div>
                                 <div className='mx-4 w-25'>
-                                    <img src='images/brand-06.png' alt='brand' />
+                                    <img src='images/aba.png' alt='brand' />
                                 </div>
-                                <div className='mx-4 w-25'>
+                                {/* <div className='mx-4 w-25'>
                                     <img src='images/brand-07.png' alt='brand' />
-                                </div>
+                                </div> */}
                             </Marquee>
                         </div>
                     </div>
@@ -283,18 +416,20 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col-3'>
-                        <Blogcard />
-                    </div>
-                    <div className='col-3'>
-                        <Blogcard />
-                    </div>
-                    <div className='col-3'>
-                        <Blogcard />
-                    </div>
-                    <div className='col-3'>
-                        <Blogcard />
-                    </div>
+                    {blogState && blogState?.map((item, index) => {
+                        return (
+                            <div className='col-4' key={index}>
+                                <Blogcard
+                                    id={item?._id}
+                                    title={item?.title}
+                                    description={item?.description}
+                                    // image={item?.image[0]?.url}
+                                    date={moment(item?.createdAt).format('MMMM Do YYYY, h:mm a')}
+                                />
+                            </div>
+                        )
+                    })
+                    }
                 </div>
             </Container>
         </>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactStars from 'react-rating-stars-component';
 import BreadCrumb from '../components/BreadCrumb';
 import Meta from '../components/Meta';
@@ -8,15 +8,54 @@ import Color from '../components/Color';
 import { TbGitCompare } from 'react-icons/tb';
 import { AiOutlineHeart } from 'react-icons/ai';
 import Container from '../components/Container';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAPorduct } from '../features/products/productSlice';
+import { toast } from "react-toastify";
+import { addProductToCart, getUserCart } from '../features/user/userSlice';
 
 // import jacket from '/public/img';
 
 const SingleProd = () => {
+    const [color, setcolor] = useState(null);
+    const [quantity, setquantity] = useState(1);
+    const [alreadyAdded, setAlredayAdded] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const getProductId = location.pathname.split("/")[2];
+    const dispatch = useDispatch();
+    const productState = useSelector(state => state.product.singleproduct);
+    const cartState = useSelector(state => state.auth.cartProducts);
+    // console.log(productState);  
+    useEffect(() => {
+        dispatch(getAPorduct(getProductId))
+        dispatch(getUserCart())
+    }, [])
+
+    // useEffect(() => {
+    //     for (let index = 0; index < cartState.length; index++) {
+    //         if (getProductId === cartState[index]?.productId?._id) {
+    //             setAlredayAdded(true);
+    //         }
+    //     }
+    // }, [])
+
+    const uploadCart = () => {
+        if (color === null) {
+            toast.error("please Choose a color")
+            return false
+        } else {
+            dispatch(addProductToCart({ productId: productState?._id, quantity, color, price: productState?.price }))
+            navigate("/cart")
+        }
+    }
+
     const props = {
         width: 400,
         height: 600,
         zoomWidth: 600,
         img: "https://i5.walmartimages.com/asr/0bec01aa-0156-4224-8150-2f9ae86a812a.0b3dc0fcbc1b0db776a812e8812e4602.jpeg"
+        //  <img src={item?.images[0]?.url} className='img-fluid' alt='product' />
     };
     const [orderProduct, setorderedProduct] = useState(true);
     const copyToClipboard = (text) => {
@@ -39,6 +78,15 @@ const SingleProd = () => {
                             <div><ReactImageZoom {...props} />,</div>
                         </div>
                         <div className='other-product-image d-flex flex-wrap gap-15'>
+                            {/* {productState?.image.map((item, index) => {
+                                return <div>
+                                    <img
+                                        src={item?.url}
+                                        className='img-fluid' alt='' />
+                                </div>
+                            })} 
+                            productState?.image[0]?.url ? productState?.image[0]?.url : 
+                            */}
                             <div>
                                 <img src='https://i5.walmartimages.com/asr/41008c4b-b542-4b3c-ac81-c770216e2548.c8ad738a3cd64aac01a8f1678a77fefe.jpeg'
                                     className='img-fluid' alt='' />
@@ -52,15 +100,15 @@ const SingleProd = () => {
                     <div className='col-6'>
                         <div className='main-product-details'>
                             <div className='border-bottom'>
-                                <h3 className='title'>Winter Time Fine Parka - Page</h3>
+                                <h3 className='title'>{productState?.title}</h3>
                             </div>
                             <div className='border-bottom py-3'>
-                                <p className='price'>$ 100</p>
+                                <p className='price'>$ {productState?.price}</p>
                                 <div className='d-flex align-items-center gap-10'>
                                     <ReactStars
                                         count={5}
                                         size={24}
-                                        value={3}
+                                        value={productState?.totalrating}
                                         edit={false}
                                         activeColor="#ffd700"
                                     />
@@ -73,10 +121,13 @@ const SingleProd = () => {
                                     <h3 className='product-heading'>Type:</h3> <p className='product-data'>winter Coat</p>
                                 </div>
                                 <div className='d-flex align-items-center gap-10 my-3'>
-                                    <h3 className='product-heading'>Tags:</h3> <p className='product-data'>Jackets</p>
+                                    <h3 className='product-heading'>Brand:</h3> <p className='product-data'>{productState?.brand}</p>
                                 </div>
                                 <div className='d-flex align-items-center gap-10 my-3'>
-                                    <h3 className='product-heading'>Category:</h3> <p className='product-data'>Winter Coat</p>
+                                    <h3 className='product-heading'>Category:</h3> <p className='product-data'>{productState?.category}</p>
+                                </div>
+                                <div className='d-flex align-items-center gap-10 my-3'>
+                                    <h3 className='product-heading'>Tags:</h3> <p className='product-data'>{productState?.tags}</p>
                                 </div>
                                 <div className='d-flex align-items-center gap-10 my-3'>
                                     <h3 className='product-heading'>Availablity:</h3> <p className='product-data'>In Stock</p>
@@ -98,32 +149,46 @@ const SingleProd = () => {
                                         </span>
                                     </div>
                                 </div>
-                                <div className="d-flex gap-10 flex-column mt-2 mb-3">
-                                    <h3 className="product-heading">Color :</h3>
-                                    <Color />
-                                </div>
+                                {
+                                    alreadyAdded === false && <>
+                                        <div className="d-flex gap-10 flex-column mt-2 mb-3">
+                                            <h3 className="product-heading">Color :</h3>
+                                            <Color setColor={setcolor} colorData={productState?.color} />
+                                        </div>
+                                    </>
+                                }
                                 <div className='d-flex align-items-center flex-row gap-15 mt-2 mb-3'>
-                                    <h3 className='product-heading'>Quantity:</h3> <div className=''>
-                                        <input
-                                            type='number'
-                                            name=''
-                                            min={1}
-                                            max={10}
-                                            className='form-control'
-                                            style={{ width: '70px' }}
-                                            id=''
-                                        />
-                                    </div>
+                                    {
+                                        alreadyAdded === false && <>
+                                            <h3 className='product-heading'>Quantity:</h3> <div className=''>
+                                                <input
+                                                    type='number'
+                                                    name=''
+                                                    min={1}
+                                                    max={10}
+                                                    className='form-control'
+                                                    style={{ width: '70px' }}
+                                                    id=''
+                                                    onChange={(e) => { setquantity(e.target.value) }}
+                                                    value={quantity}
+                                                />
+                                            </div>
+                                        </>
+                                    }
                                     <div className="d-flex align-items-center gap-30 ms-5">
+                                        {/* {alreadyadded?"ms-0:ms-5" + 'd-flex align-items-center gap-30 ms-5'} */}
                                         <button
                                             className="button border-0"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop"
+                                            // data-bs-toggle="modal"
+                                            // data-bs-target="#staticBackdrop"
                                             type="button"
+                                            onClick={() => { uploadCart() }}
+                                        //onClick={() => { alreadyAdded ? navigate('/cart') : uploadCart() }}
+
                                         >
-                                            Add to Cart
+                                            {alreadyAdded ? "Go to Cart" : "Add to Cart"}
                                         </button>
-                                        <button className="button signup">Buy It Now</button>
+                                        {/* <button className="button signup">Buy It Now</button> */}
                                     </div>
                                 </div>
                                 <div className="d-flex align-items-center gap-15">
@@ -151,7 +216,7 @@ const SingleProd = () => {
                                     <a href='javascript:void(0)'
                                         onClick={() => {
                                             copyToClipboard(
-                                                "https://i5.walmartimages.com/asr/0bec01aa-0156-4224-8150-2f9ae86a812a.0b3dc0fcbc1b0db776a812e8812e4602.jpeg"
+                                                window.location.href
                                             );
                                         }} >
                                         Copy product Link
@@ -167,7 +232,7 @@ const SingleProd = () => {
                     <div className='col-12'>
                         <h4>Description</h4>
                         <div className='bg-white p-4'>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pretium congue elit eget dignissim. Integer nec porttitor nisl, id imperdiet magna. In vitae elementum nulla, at feugiat augue. Praesent dictum felis vel ipsum congue,  Praesent dictum felis vel ipsum congue</p>
+                            <p>{productState?.description}</p>
                         </div>
                     </div>
                 </div>

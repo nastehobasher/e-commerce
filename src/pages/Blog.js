@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Blogcard from '../components/Blogcard';
 import BreadCrumb from '../components/BreadCrumb';
 import Meta from '../components/Meta';
 import Container from '../components/Container';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllblogs } from '../features/blogs/blogSlice';
+import moment from 'moment';
 
 
 const Blog = () => {
+    const blogState = useSelector((state) => state.blog.blog ? state.blog.blog : []);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        getblogs();
+    }, [])
+    const getblogs = () => {
+        dispatch(getAllblogs());
+    }
     return (
         <>
             <Meta title={"Blogs"} />
@@ -32,18 +43,22 @@ const Blog = () => {
                     </div>
                     <div className='col-9'>
                         <div className='row'>
-                            <div className='col-6 mb-3'>
-                                <Blogcard />
-                            </div>
-                            <div className='col-6 mb-3'>
-                                <Blogcard />
-                            </div>
-                            <div className='col-6 mb-3'>
-                                <Blogcard />
-                            </div>
-                            <div className='col-6 mb-3'>
-                                <Blogcard />
-                            </div>
+                            {blogState && blogState?.map((item, index) => {
+                                if (index < 3) {
+                                    return (
+                                        <div className='col-6 mb-3' key={index}>
+                                            <Blogcard
+                                                id={item?._id}
+                                                title={item?.title}
+                                                description={item?.description}
+                                                // image={item?.image[0]?.url}
+                                                date={moment(item?.createdAt).format('MMMM Do YYYY, h:mm a')}
+                                            />
+                                        </div>
+                                    )
+                                }
+                            })
+                            }
                         </div>
                     </div>
                 </div>

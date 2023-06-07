@@ -4,6 +4,13 @@ import { Link } from 'react-router-dom';
 import BreadCrumb from '../components/BreadCrumb';
 import Container from '../components/Container';
 import Custominput from '../components/Custominput';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from "formik";
+import * as yup from 'yup';
+
+const emailSchema = yup.object({
+    email: yup.string().nullable().email("Email should be valid").required("Email Address is Required"),
+});
 
 const Forgotpassword = () => {
     return (
